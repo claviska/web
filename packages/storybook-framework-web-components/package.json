@@ -31,7 +31,13 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "npm run test:runtime && npm run test:build",
+    "test:build": "npm run test:build:storybook && STORYBOOK_BUILD=1 npx playwright test",
+    "test:build:storybook": "storybook build -c ./tests/fixtures/all-in-one/.storybook -o ./tests/fixtures/all-in-one/storybook-build",
+    "test:runtime": "npx playwright test",
+    "test:start:build-storybook": "wds -r ./tests/fixtures/all-in-one/storybook-build -p 3000",
+    "test:start:runtime-storybook": "storybook dev -c ./tests/fixtures/all-in-one/.storybook -p 3000 --no-open"
   },
   "files": [
     "*.d.ts",
@@ -58,6 +64,11 @@
     "@web/storybook-builder": "^0.1.0"
   },
   "devDependencies": {
-    "@storybook/types": "^7.0.0"
+    "@playwright/test": "^1.42.0",
+    "@storybook/addon-essentials": "^7.0.0",
+    "@storybook/addon-interactions": "^7.0.0",
+    "@storybook/addon-links": "^7.0.0",
+    "@storybook/types": "^7.0.0",
+    "storybook": "^7.0.0"
   }
 }
